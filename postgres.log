@@ -1,0 +1,10 @@
+Attaching to t369_postgres
+[36mt369_postgres |[0m 2026-06-08T12:58:19.674474599Z 
+[36mt369_postgres |[0m 2026-06-08T12:58:19.674525974Z PostgreSQL Database directory appears to contain a database; Skipping initialization
+[36mt369_postgres |[0m 2026-06-08T12:58:19.674531241Z 
+[36mt369_postgres |[0m 2026-06-08T12:58:19.711180812Z 2026-06-08 12:58:19.710 UTC [1] LOG:  starting PostgreSQL 16.14 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+[36mt369_postgres |[0m 2026-06-08T12:58:19.711218610Z 2026-06-08 12:58:19.710 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+[36mt369_postgres |[0m 2026-06-08T12:58:19.711890694Z 2026-06-08 12:58:19.711 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+[36mt369_postgres |[0m 2026-06-08T12:58:19.722121615Z 2026-06-08 12:58:19.721 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+[36mt369_postgres |[0m 2026-06-08T12:58:19.738820766Z 2026-06-08 12:58:19.738 UTC [29] LOG:  database system was shut down at 2026-06-08 12:57:48 UTC
+[36mt369_postgres |[0m 2026-06-08T12:58:19.764980265Z 2026-06-08 12:58:19.764 UTC [1] LOG:  database system is ready to accept connections

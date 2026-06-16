@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task369 - Local First Dashboard</title>
+    <link rel="stylesheet" href="/theme-dark.css" />
+    <link rel="stylesheet" href="/theme-light.css" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <div class="bg-grid"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar glass">
+        <div class="brand">
+          <div class="brand-icon">T369</div>
+          <div>
+            <h1>Task369</h1>
+            <p>Productivity Command Center</p>
+          </div>
+        </div>
+
+        <nav id="menu" class="menu">
+          <button class="menu-btn active" data-view="dashboard">Dashboard</button>
+          <button class="menu-btn" data-view="personalTasks">Personal Tasks</button>
+          <button class="menu-btn" data-view="professionalTasks">Professional Tasks</button>
+          <button class="menu-btn" data-view="lifeCategory">Life Category</button>
+          <button class="menu-btn" data-view="planner369">369 Planner</button>
+          <button class="menu-btn" data-view="professional">Team & Vacation</button>
+          <button class="menu-btn" data-view="teamTasks">Team Tasks</button>
+          <button class="menu-btn" data-view="focus">Focus Timer</button>
+          <button class="menu-btn" data-view="completedTasks">Completed Tasks</button>
+          <button class="menu-btn" data-view="settings">Settings</button>
+        </nav>
+
+        <div class="xp-widget glass-soft">
+          <p class="muted">Current Level</p>
+          <h2 id="levelName">Novice</h2>
+          <p id="xpTotal">0 XP</p>
+          <div class="streak-grid">
+            <div><span id="dailyStreak">0</span><small>Daily</small></div>
+            <div><span id="weeklyStreak">0</span><small>Weekly</small></div>
+            <div><span id="monthlyStreak">0</span><small>Monthly</small></div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="topbar glass">
+          <div>
+            <h2 id="viewTitle">Dashboard</h2>
+            <p id="viewSubtitle">Build your life with the 3-6-9 rhythm.</p>
+          </div>
+          <div class="top-actions">
+            <div id="overallProgress" class="progress-pill">0% complete</div>
+          </div>
+        </header>
+
+        <section id="dashboardView" class="view active">
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Dashboard</h3>
+              <div class="filter-row">
+                <input id="dashboardTaskSearch" placeholder="Search title, keyword, status, assigned user" />
+                <button id="clearDashboardTaskSearch" class="ghost" type="button">Clear</button>
+              </div>
+            </div>
+            <p class="muted">Use the left menu to manage Personal Tasks, Professional Tasks, Life Categories, and Team workflows.</p>
+          </div>
+
+          <div class="progress-layout">
+            <div class="panel glass"><canvas id="trendChart"></canvas></div>
+            <div class="panel glass"><canvas id="categoryChart"></canvas></div>
+          </div>
+
+          <div class="dashboard-task-blocks">
+            <div class="panel glass">
+              <h3>Today's Task list</h3>
+              <div id="todayTaskList" class="journal-list"></div>
+            </div>
+            <div class="panel glass">
+              <h3>Timedue/Backlog</h3>
+              <div id="backlogTaskList" class="journal-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="personalTasksView" class="view">
+          <div class="summary-grid" id="personalSummaryCards"></div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Personal Task Manager</h3>
+            </div>
+            <form id="personalTaskForm" class="task-form-grid">
+              <input id="personalTitle" placeholder="Task title" required />
+              <select id="personalCategory" required></select>
+              <textarea id="personalDescription" placeholder="Description"></textarea>
+              <select id="personalSeverity" required>
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+              <select id="personalStatus" required>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+              <input id="personalDueDate" type="date" placeholder="Start Date" />
+              <input id="personalEndDate" type="date" placeholder="End Date" />
+              <input id="personalDueTime" type="time" />
+              <textarea id="personalNotes" placeholder="Notes"></textarea>
+              <div class="form-actions span-2">
+                <button class="primary" type="submit">Save Personal Task</button>
+                <button id="clearPersonalTaskBtn" class="ghost" type="button">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Personal Tasks</h3>
+            </div>
+            <div class="task-priority-filters" data-task-type="personal">
+              <button class="ghost priority-btn active" data-task-type="personal" data-priority="">All Tasks</button>
+              <button class="ghost priority-btn" data-task-type="personal" data-priority="high">High</button>
+              <button class="ghost priority-btn" data-task-type="personal" data-priority="medium">Medium</button>
+              <button class="ghost priority-btn" data-task-type="personal" data-priority="low">Low</button>
+            </div>
+          </div>
+
+          <div class="panel glass">
+            <h3>Weekly Calendar</h3>
+            <div id="personalTimeline" class="timeline-root"></div>
+          </div>
+        </section>
+
+        <section id="professionalTasksView" class="view">
+          <div class="summary-grid" id="professionalWidgetCards"></div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Professional Task Manager</h3>
+            </div>
+            <form id="professionalTaskForm" class="task-form-grid">
+              <input id="professionalTitle" placeholder="Task title" required />
+              <input id="professionalProject" placeholder="Project name" required />
+              <textarea id="professionalDescription" placeholder="Description"></textarea>
+              <select id="professionalSeverity" required>
+                <option value="high">High</option>
+                <option value="medium" selected>Medium</option>
+                <option value="low">Low</option>
+              </select>
+              <select id="professionalStatus" required>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+              </select>
+              <select id="professionalAssignedTo"></select>
+              <input id="professionalDueDate" type="date" placeholder="Start Date" />
+              <input id="professionalEndDate" type="date" placeholder="End Date" />
+              <input id="professionalDueTime" type="time" />
+              <input id="professionalMandays" type="number" min="0" step="0.5" placeholder="Mandays (optional)" />
+              <textarea id="professionalNotes" placeholder="Notes"></textarea>
+              <div class="form-actions span-2">
+                <button class="primary" type="submit">Save Professional Task</button>
+                <button id="clearProfessionalTaskBtn" class="ghost" type="button">Clear</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Professional Tasks</h3>
+            </div>
+            <div class="task-priority-filters" data-task-type="professional">
+              <button class="ghost priority-btn active" data-task-type="professional" data-priority="">All Tasks</button>
+              <button class="ghost priority-btn" data-task-type="professional" data-priority="high">High</button>
+              <button class="ghost priority-btn" data-task-type="professional" data-priority="medium">Medium</button>
+              <button class="ghost priority-btn" data-task-type="professional" data-priority="low">Low</button>
+            </div>
+          </div>
+
+          <div class="panel glass">
+            <h3>Weekly Calendar</h3>
+            <div id="professionalTimeline" class="timeline-root"></div>
+          </div>
+        </section>
+
+        <section id="lifeCategoryView" class="view">
+          <div class="panel glass">
+            <h3>Life Categories</h3>
+            <div id="categoryGrid" class="category-grid"></div>
+          </div>
+        </section>
+
+        <section id="planner369View" class="view">
+          <div class="panel glass planner-hero">
+            <div class="panel-head">
+              <h3>369 Planner</h3>
+              <p class="muted" style="margin:0;">Flash cards + planner flow. Click any card to open its tasks.</p>
+            </div>
+            <div id="plannerFlashGrid" class="planner-flash-grid"></div>
+          </div>
+
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Planner Title</h3>
+              <input id="plannerTitle" placeholder="Enter planner title" />
+            </div>
+            <div class="panel-head" style="margin-top:10px;">
+              <h4 style="margin:0;">Plan Date</h4>
+              <input id="planner369Date" type="date" />
+            </div>
+            <div class="panel-head" style="margin-top:8px;">
+              <h4 style="margin:0;">Recent Planner Dates</h4>
+              <select id="plannerHistorySelect" style="max-width:220px;">
+                <option value="">Select date</option>
+              </select>
+            </div>
+            <div class="planner-columns">
+              <div>
+                <h4>Morning (3)</h4>
+                <div id="morningList369"></div>
+              </div>
+              <div>
+                <h4>Afternoon (6)</h4>
+                <div id="afternoonList369"></div>
+              </div>
+              <div>
+                <h4>Night (9)</h4>
+                <div id="nightList369"></div>
+              </div>
+            </div>
+            <div class="form-actions" style="margin-top:10px;">
+              <button id="savePlanner369Btn" class="primary">Save 369 Planner</button>
+              <button id="deletePlanner369Btn" class="ghost" type="button">Delete Planner</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="completedTasksView" class="view">
+          <div class="panel glass">
+            <h3>Completed Tasks</h3>
+            <div class="summary-grid" id="completedStatsCards"></div>
+            <div id="completedTaskList" class="achievement-grid"></div>
+          </div>
+        </section>
+
+        <section id="settingsView" class="view">
+          <div class="panel glass">
+            <h3>Theme System</h3>
+            <p>Select your style. Saved locally and in local database settings.</p>
+            <div class="theme-grid">
+              <button class="theme-btn" data-theme="dark">Dark</button>
+              <button class="theme-btn" data-theme="light">Light</button>
+              <button class="theme-btn" data-theme="anime">Anime</button>
+              <button class="theme-btn" data-theme="cyberpunk">Cyberpunk</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="professionalView" class="view">
+          <div class="professional-nav">
+            <button class="sub-tab-btn active" data-professional-tab="team">Team Members</button>
+            <button class="sub-tab-btn" data-professional-tab="vacation">Vacation Calendar</button>
+            <button class="sub-tab-btn" data-professional-tab="reassignments">Reassignments</button>
+          </div>
+
+          <div id="professionalTeamPanel" class="professional-panel active">
+            <div class="panel glass">
+              <h3>Team Members</h3>
+              <form id="teamMemberForm" class="task-form-grid">
+                <input id="teamName" placeholder="Name" required />
+                <input id="teamEmail" type="email" placeholder="Email" required />
+                <input id="teamRole" placeholder="Role" required />
+                <select id="teamStatus">
+                  <option value="active">Active</option>
+                  <option value="vacation">Vacation</option>
+                </select>
+                <div class="form-actions span-2">
+                  <button class="primary" type="submit">Save Team Member</button>
+                  <button id="clearTeamMemberBtn" class="ghost" type="button">Clear</button>
+                </div>
+              </form>
+            </div>
+            <div class="panel glass">
+              <h3>Member List</h3>
+              <div id="teamMemberList" class="journal-list"></div>
+            </div>
+          </div>
+
+          <div id="professionalVacationPanel" class="professional-panel">
+            <div class="panel glass">
+              <h3>Add Vacation</h3>
+              <form id="vacationForm" class="task-form-grid">
+                <select id="vacationMember" required></select>
+                <input id="vacationStartDate" type="date" required />
+                <input id="vacationEndDate" type="date" required />
+                <textarea id="vacationReason" placeholder="Reason"></textarea>
+                <div class="form-actions span-2">
+                  <button class="primary" type="submit">Save Vacation</button>
+                  <button id="clearVacationBtn" class="ghost" type="button">Clear</button>
+                </div>
+              </form>
+            </div>
+            <div class="panel glass">
+              <div class="panel-head">
+                <h3>Vacation Calendar</h3>
+                <div class="filter-row">
+                  <button id="vacCalPrev" class="ghost">&larr; Prev</button>
+                  <span id="vacCalMonthLabel" style="padding:8px 12px;font-weight:700;"></span>
+                  <button id="vacCalNext" class="ghost">Next &rarr;</button>
+                </div>
+              </div>
+              <div id="vacationCalendarGrid" class="vac-cal-grid"></div>
+              <div id="vacationLegend" class="vac-legend"></div>
+            </div>
+          </div>
+
+          <div id="professionalReassignPanel" class="professional-panel">
+            <div class="panel glass">
+              <h3>Task Reassignment</h3>
+              <form id="reassignmentForm" class="task-form-grid">
+                <select id="reassignmentTask" required></select>
+                <select id="reassignmentToMember" required></select>
+                <textarea id="reassignmentReason" placeholder="Reason"></textarea>
+                <div class="form-actions span-2">
+                  <button class="primary" type="submit">Reassign Task</button>
+                </div>
+              </form>
+            </div>
+            <div class="panel glass">
+              <h3>Reassignment Log</h3>
+              <div id="reassignmentList" class="journal-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="teamTasksView" class="view">
+          <div class="panel glass">
+            <div class="panel-head">
+              <h3>Team Tasks</h3>
+              <p class="muted" style="margin:0;">Click a member card to view their full calendar and manday breakdown.</p>
+            </div>
+          </div>
+          <div class="task-priority-filters" id="teamTaskPriorityFilters" style="margin-bottom:4px;">
+            <button class="ghost priority-btn active" data-team-priority="">All Members</button>
+            <button class="ghost priority-btn" data-team-priority="high">High</button>
+            <button class="ghost priority-btn" data-team-priority="medium">Medium</button>
+            <button class="ghost priority-btn" data-team-priority="low">Low</button>
+          </div>
+          <p id="teamTaskFilterNote" class="muted" style="font-size:0.82rem;margin:0 0 8px;"></p>
+          <div id="teamTasksGrid" class="team-flash-grid"></div>
+        </section>
+
+        <section id="focusView" class="view">
+          <div class="panel glass">
+            <h3>Focus Timer</h3>
+            <p class="muted">Preset durations, custom session length, and local session analytics.</p>
+            <div id="focusPresetGrid" class="preset-grid">
+              <button class="ghost focus-preset" data-minutes="25">25 min</button>
+              <button class="ghost focus-preset" data-minutes="30">30 min</button>
+              <button class="ghost focus-preset" data-minutes="45">45 min</button>
+              <button class="ghost focus-preset" data-minutes="60">60 min</button>
+              <button class="ghost focus-preset" data-minutes="90">90 min</button>
+            </div>
+            <div class="filter-row">
+              <input id="focusCustomMinutes" type="number" min="1" max="240" placeholder="Custom minutes" />
+              <button id="setCustomFocusBtn" class="ghost">Set Custom</button>
+            </div>
+            <div class="focus-clock" id="focusClock">25:00</div>
+            <div class="form-actions">
+              <button id="focusStartBtn" class="primary">Start</button>
+              <button id="focusPauseBtn" class="ghost">Pause</button>
+              <button id="focusResumeBtn" class="ghost">Resume</button>
+              <button id="focusResetBtn" class="ghost">Reset</button>
+            </div>
+          </div>
+
+          <div class="panel glass">
+            <h3>Focus Statistics</h3>
+            <div class="summary-grid">
+              <article class="summary-card">
+                <p>Total Sessions</p>
+                <h4 id="focusTotalSessions">0</h4>
+              </article>
+              <article class="summary-card">
+                <p>Total Focus Time</p>
+                <h4 id="focusTotalMinutes">0 min</h4>
+              </article>
+              <article class="summary-card">
+                <p>Daily Sessions</p>
+                <h4 id="focusDailySessions">0</h4>
+              </article>
+              <article class="summary-card">
+                <p>Weekly Sessions</p>
+                <h4 id="focusWeeklySessions">0</h4>
+              </article>
+            </div>
+            <div id="focusSessionList" class="journal-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="detailDrawer" class="drawer">
+      <div class="drawer-card glass">
+        <button id="closeDrawer" class="close-btn">×</button>
+        <div id="drawerHeader"></div>
+        <div id="activityGroups"></div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <div id="memberDetailModal" class="modal-overlay">
+      <div class="modal-card glass" style="width:min(900px,100%);">
+        <div class="panel-head">
+          <div>
+            <h3 id="memberDetailName">Member</h3>
+            <p class="muted" id="memberDetailRole"></p>
+          </div>
+          <button id="closeMemberDetailModal" class="ghost" type="button">Close</button>
+        </div>
+        <div class="summary-grid" id="memberDetailStats" style="margin:12px 0;"></div>
+        <div id="memberDetailCalendar" class="member-cal-root"></div>
+        <h4 style="margin-top:16px;">Project Mandays</h4>
+        <div id="memberDetailMandays" class="journal-list"></div>
+      </div>
+    </div>
+
+    <div id="taskEditorModal" class="modal-overlay">
+      <div class="modal-card glass">
+        <div class="panel-head">
+          <h3>Edit Task</h3>
+          <button id="closeTaskEditorModal" class="ghost" type="button">Close</button>
+        </div>
+        <form id="taskEditorForm" class="task-form-grid">
+          <input id="editTaskTitle" placeholder="Task title" required />
+          <div id="editTaskCategoryWrap"><select id="editTaskCategory"></select></div>
+          <div id="editTaskProjectWrap"><input id="editTaskProject" placeholder="Project name" /></div>
+          <textarea id="editTaskDescription" class="span-2" placeholder="Description"></textarea>
+          <select id="editTaskSeverity" required>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+          </select>
+          <select id="editTaskStatus" required>
+            <option value="pending">Pending</option>
+            <option value="in_progress">In Progress</option>
+            <option value="completed">Completed</option>
+          </select>
+          <div id="editTaskAssignedWrap"><select id="editTaskAssignedTo"></select></div>
+          <input id="editTaskDueDate" type="date" placeholder="Start Date" />
+          <input id="editTaskEndDate" type="date" placeholder="End Date" />
+          <input id="editTaskDueTime" type="time" />
+          <input id="editTaskMandays" type="number" min="0" step="0.5" placeholder="Mandays (optional)" />
+          <textarea id="editTaskNotes" class="span-2" placeholder="Notes"></textarea>
+          <div class="form-actions span-2">
+            <button class="primary" type="submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/vendor/chart.umd.js"></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

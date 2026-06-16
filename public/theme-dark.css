@@ -1,0 +1,40 @@
+html[data-theme="dark"] {
+  --bg-primary: #121212;
+  --bg-canvas: #121212;
+  --bg-surface: #181818;
+  --bg-surface-2: #1f1f1f;
+  --bg-elevated: #252525;
+
+  --text-primary: #ffffff;
+  --text-secondary: #cbcbcb;
+  --text-muted: #b3b3b3;
+
+  --accent-primary: #1ed760;
+  --accent-primary-hover: #1db954;
+  --accent-positive: #1ed760;
+  --accent-warning: #ffa42b;
+  --accent-negative: #f3727f;
+  --accent-info: #539df5;
+
+  --border-subtle: #2a2a2a;
+  --border-strong: #4d4d4d;
+
+  --radius-card: 8px;
+  --radius-input: 500px;
+  --radius-button: 9999px;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 8px 8px rgba(0, 0, 0, 0.3);
+  --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 2px rgba(30, 215, 96, 0.35);
+
+  --font-ui: "Segoe UI", "Trebuchet MS", sans-serif;
+  --font-display: "Segoe UI", "Trebuchet MS", sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+}
