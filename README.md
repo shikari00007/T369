@@ -1,4 +1,4 @@
-# Task369 - Production-Ready Local-First Dashboard
+# T369 -  Task369
 
 Task369 is a fully self-hosted, offline-capable, local-first web application based on the 3-6-9 framework.
 
